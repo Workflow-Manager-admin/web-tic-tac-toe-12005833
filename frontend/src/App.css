@@ -1,104 +1,181 @@
-/* CSS Variables for Theme Management */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  /* Custom color variables based on design brief */
+  --ttt-primary: #1976D2;
+  --ttt-secondary: #424242;
+  --ttt-accent: #FFC107;
+  --ttt-board-bg: #fff;
+  --ttt-cell-bg: #f8f9fa;
+  --ttt-cell-border: #e9ecef;
+  --ttt-player-x: #1976D2;
+  --ttt-player-o: #FFC107;
+  --ttt-status-neutral: #2d2d2d;
+  --ttt-status-tie: #9e9e9e;
+  --ttt-radius: 18px;
+  --ttt-shadow: 0 4px 24px rgba(33,48,70,0.06);
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+body {
+  background: var(--ttt-board-bg);
 }
 
-.App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+/* Root wrapper: centers all content */
+.ttt-root {
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  background: var(--ttt-board-bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
+.ttt-container {
+  margin: 36px 0 0 0;
+  background: var(--ttt-board-bg);
+  border-radius: var(--ttt-radius);
+  box-shadow: var(--ttt-shadow);
+  padding: 32px 24px;
+  max-width: 350px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+/* Title styling */
+.ttt-title {
+  color: var(--ttt-primary);
+  font-size: 2.1rem;
+  margin-bottom: 18px;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
+.ttt-board {
+  display: grid;
+  grid-template-columns: repeat(3, 72px);
+  grid-template-rows: repeat(3, 72px);
+  gap: 0;
+  background: var(--ttt-board-bg);
+  border-radius: var(--ttt-radius);
+  box-shadow: 0 2px 12px rgba(20,40,60,0.055);
+  margin-bottom: 22px;
+  margin-top: 9px;
+}
+.ttt-cell {
+  background: var(--ttt-cell-bg);
+  border: 2px solid var(--ttt-cell-border);
+  outline: none;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 2.35rem;
+  color: var(--ttt-status-neutral);
+  height: 72px;
+  width: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: none;
+  border-radius: 0;
+}
+.ttt-cell:nth-child(1), .ttt-cell:nth-child(2), .ttt-cell:nth-child(3) { border-top-left-radius: var(--ttt-radius); border-top-right-radius: var(--ttt-radius);}
+.ttt-cell:nth-child(7), .ttt-cell:nth-child(8), .ttt-cell:nth-child(9) { border-bottom-left-radius: var(--ttt-radius); border-bottom-right-radius: var(--ttt-radius);}
+.ttt-cell:disabled {
+  background: #f2f2f2;
+  color: #bababa;
+  cursor: default;
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+/* X and O color highlight */
+.ttt-x {
+  color: var(--ttt-player-x);
+  font-weight: 700;
+  text-shadow: 0 1px 1px #dbeafe23;
+}
+.ttt-o {
+  color: var(--ttt-player-o);
+  font-weight: 700;
+  text-shadow: 0 1px 1px #fff9e14a;
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
+/* Game status display */
+.ttt-status {
+  margin: 18px 0 8px 0;
+  font-size: 1.18rem;
+  font-weight: 600;
+  min-height: 28px;
+  letter-spacing: 0.5px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.ttt-restart-btn {
+  margin: 0 0 9px 0;
+  background: var(--ttt-accent);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  box-shadow: 0 2px 12px rgba(250, 200, 50, 0.05);
+  transition: background 0.12s, transform 0.12s;
+  cursor: pointer;
+  outline: none;
+}
+.ttt-restart-btn:hover, .ttt-restart-btn:focus {
+  background: #ffd54f;
+  color: var(--ttt-secondary);
+  transform: translateY(-2px) scale(1.02);
+}
+
+/* Player legend (minimal dots) */
+.ttt-info {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 7px;
+  gap: 14px;
+  font-size: 1rem;
+  color: var(--ttt-secondary);
+}
+.legend-x,
+.legend-o {
+  width: 13px;
+  height: 13px;
+  display: inline-block;
+  border-radius: 50%;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+.legend-x {
+  background: var(--ttt-player-x);
+}
+.legend-o {
+  background: var(--ttt-player-o);
+}
+
+/* Game footer branding */
+.ttt-footer {
+  margin-top: 30px;
+  padding: 18px 0 10px 0;
+  color: var(--ttt-secondary);
+  font-size: 0.98rem;
+  letter-spacing: 0.08rem;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 480px) {
+  .ttt-container {
+    max-width: 98vw;
+    padding: 12vw 2vw 4vw 2vw;
   }
-  to {
-    transform: rotate(360deg);
+  .ttt-board {
+    grid-template-columns: repeat(3, 22vw);
+    grid-template-rows: repeat(3, 22vw);
   }
-}
-
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+  .ttt-cell {
+    width: 22vw;
+    height: 22vw;
+    font-size: 9vw;
+    border-width: 1.5px;
   }
 }
